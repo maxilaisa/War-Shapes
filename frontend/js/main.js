@@ -33,6 +33,11 @@ window.onload = function() {
         lobby.style.display = 'none';
         canvas.style.display = 'block';
         lobbyStatus.textContent = '';
+        
+        // Show mobile controls if on mobile
+        if (window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            document.getElementById('mobileControls').style.display = 'flex';
+        }
     });
     
     game.network.on('onWaiting', (data) => {
