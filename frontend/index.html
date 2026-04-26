@@ -9,7 +9,38 @@
 <body>
     <div class="game-container">
         <h1>SHAPE ARENA</h1>
-        <canvas id="gameCanvas"></canvas>
+        
+        <!-- Lobby UI -->
+        <div id="lobby" class="lobby">
+            <h2>Online Multiplayer</h2>
+            <div class="lobby-form">
+                <input type="text" id="playerName" placeholder="Enter your name" maxlength="15">
+                <select id="shapeSelect">
+                    <option value="CIRCLE">Circle (Momentum Fighter)</option>
+                    <option value="OVAL">Oval (Speed Skater)</option>
+                    <option value="ELLIPSE">Ellipse (Curve Fighter)</option>
+                    <option value="TRIANGLE">Triangle (Assassin)</option>
+                    <option value="SQUARE">Square (Tank Brawler)</option>
+                    <option value="RECTANGLE">Rectangle (Linear Striker)</option>
+                    <option value="PARALLELOGRAM">Parallelogram (Evasive Fighter)</option>
+                    <option value="RHOMBUS">Rhombus (Counter Specialist)</option>
+                    <option value="TRAPEZOID">Trapezoid (Unstable Fighter)</option>
+                    <option value="KITE">Kite (Air Mobility Fighter)</option>
+                    <option value="PENTAGON">Pentagon (Balanced Fighter)</option>
+                    <option value="HEXAGON">Hexagon (Defense Controller)</option>
+                    <option value="STAR">Star (Burst Aggressor)</option>
+                    <option value="HEART">Heart (Sustain Fighter)</option>
+                    <option value="CRESCENT">Crescent (Trick Fighter)</option>
+                    <option value="DIAMOND">Diamond (Precision Fighter)</option>
+                    <option value="SPIRAL">Spiral (Vortex Chain)</option>
+                </select>
+                <button id="joinBtn">Find Match</button>
+            </div>
+            <div id="lobbyStatus" class="lobby-status"></div>
+        </div>
+
+        <canvas id="gameCanvas" style="display: none;"></canvas>
+        
         <div class="controls-info">
             <div class="player-controls">
                 <h3>Player 1 (WASD)</h3>
