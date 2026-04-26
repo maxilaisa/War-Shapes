@@ -8,13 +8,34 @@ let inputHandler;
 
 window.onload = function() {
     game = new Game("gameCanvas");
-    
-    // Add two fighters
-    game.addFighter("CIRCLE", 200, 300);
-    game.addFighter("TRIANGLE", 600, 300);
-    
     inputHandler = new InputHandler(game);
     
-    // Start the game
-    setTimeout(() => game.start(), 1000);
+    // Lobby handling
+    const lobby = document.getElementById('lobby');
+    const canvas = document.getElementById('gameCanvas');
+    const joinBtn = document.getElementById('joinBtn');
+    const playerNameInput = document.getElementById('playerName');
+    const shapeSelect = document.getElementById('shapeSelect');
+    const lobbyStatus = document.getElementById('lobbyStatus');
+    
+    joinBtn.addEventListener('click', () => {
+        const playerName = playerNameInput.value.trim() || 'Player';
+        const shapeType = shapeSelect.value;
+        
+        lobbyStatus.textContent = 'Connecting...';
+        joinBtn.disabled = true;
+        
+        game.joinOnlineGame(playerName, shapeType);
+    });
+    
+    // Listen for game start to hide lobby and show canvas
+    game.network.on('onGameStart', (data) => {
+        lobby.style.display = 'none';
+        canvas.style.display = 'block';
+        lobbyStatus.textContent = '';
+    });
+    
+    game.network.on('onWaiting', (data) => {
+        lobbyStatus.textContent = data.message;
+    });
 };
