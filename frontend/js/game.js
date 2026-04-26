@@ -237,6 +237,8 @@ export class Game {
     }
 
     render() {
+        console.log('Rendering, fighters count:', this.fighters.length, 'gameState:', this.gameState);
+        
         // Clear canvas
         this.ctx.fillStyle = "#1a1a2e";
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
@@ -264,6 +266,9 @@ export class Game {
         const ctx = this.ctx;
         const x = fighter.position.x;
         const y = fighter.position.y;
+        
+        // Debug: log fighter position
+        console.log('Drawing fighter:', fighter.shapeType, 'at', x, y);
         
         // Set color based on shape
         const colors = {
