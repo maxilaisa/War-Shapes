@@ -1,11 +1,19 @@
-// SHAPE ARENA - Input Handler
+// SHAPE ARENA - Input Handling
 
 export class InputHandler {
     constructor(game) {
         this.game = game;
         this.keys = {};
+        this.isMobile = this.detectMobile();
         
         this.setupListeners();
+        if (this.isMobile) {
+            this.setupMobileControls();
+        }
+    }
+
+    detectMobile() {
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
     }
 
     setupListeners() {
@@ -19,74 +27,72 @@ export class InputHandler {
         });
     }
 
+    setupMobileControls() {
+        const mobileBtns = {
+            btnUp: 'w',
+            btnDown: 's',
+            btnLeft: 'a',
+            btnRight: 'd',
+            btnLight: 'q',
+            btnMedium: 'e',
+            btnHeavy: 'r',
+            btnUlt: 'f',
+            btnDodge: ' '
+        };
+
+        for (const [btnId, key] of Object.entries(mobileBtns)) {
+            const btn = document.getElementById(btnId);
+            if (btn) {
+                btn.addEventListener('touchstart', (e) => {
+                    e.preventDefault();
+                    this.handleInput(key);
+                });
+                btn.addEventListener('touchend', (e) => {
+                    e.preventDefault();
+                    this.keys[key] = false;
+                });
+            }
+        }
+    }
+
     handleInput(key) {
         if (this.game.fighters.length < 2) return;
         
-        const [f1, f2] = this.game.fighters;
+        // In online mode, only control your own fighter
+        const myFighter = this.game.isOnline ? this.game.fighters[this.game.playerIndex] : this.game.fighters[0];
         
-        // Player 1 controls (WASD)
+        if (!myFighter) return;
+        
+        // Player controls (WASD - same for both players in online mode)
         switch (key.toLowerCase()) {
-            case "w": f1.move(0, -5); break;
-            case "s": f1.move(0, 5); break;
-            case "a": f1.move(-5, 0); f1.facing = -1; break;
-            case "d": f1.move(5, 0); f1.facing = 1; break;
+            case "w": myFighter.move(0, -5); break;
+            case "s": myFighter.move(0, 5); break;
+            case "a": myFighter.move(-5, 0); myFighter.facing = -1; break;
+            case "d": myFighter.move(5, 0); myFighter.facing = 1; break;
             case "q": 
-                if (f1.abilities[0].canUse()) {
-                    f1.abilities[0].use();
-                    f1.isAttacking = true;
+                if (myFighter.abilities[0].canUse()) {
+                    myFighter.abilities[0].use();
+                    myFighter.isAttacking = true;
                 }
                 break;
             case "e":
-                if (f1.abilities[1].canUse()) {
-                    f1.abilities[1].use();
-                    f1.isAttacking = true;
+                if (myFighter.abilities[1].canUse()) {
+                    myFighter.abilities[1].use();
+                    myFighter.isAttacking = true;
                 }
                 break;
             case "r":
-                if (f1.abilities[2].canUse()) {
-                    f1.abilities[2].use();
-                    f1.isAttacking = true;
+                if (myFighter.abilities[2].canUse()) {
+                    myFighter.abilities[2].use();
+                    myFighter.isAttacking = true;
                 }
                 break;
             case "f":
-                f1.activateUltimate();
+                myFighter.activateUltimate();
                 break;
             case " ":
-                f1.isDodging = true;
-                setTimeout(() => f1.isDodging = false, 300);
-                break;
-        }
-        
-        // Player 2 controls (Arrow keys)
-        switch (key) {
-            case "ArrowUp": f2.move(0, -5); break;
-            case "ArrowDown": f2.move(0, 5); break;
-            case "ArrowLeft": f2.move(-5, 0); f2.facing = -1; break;
-            case "ArrowRight": f2.move(5, 0); f2.facing = 1; break;
-            case "/":
-                if (f2.abilities[0].canUse()) {
-                    f2.abilities[0].use();
-                    f2.isAttacking = true;
-                }
-                break;
-            case ".":
-                if (f2.abilities[1].canUse()) {
-                    f2.abilities[1].use();
-                    f2.isAttacking = true;
-                }
-                break;
-            case "'":
-                if (f2.abilities[2].canUse()) {
-                    f2.abilities[2].use();
-                    f2.isAttacking = true;
-                }
-                break;
-            case "Enter":
-                f2.activateUltimate();
-                break;
-            case "Shift":
-                f2.isDodging = true;
-                setTimeout(() => f2.isDodging = false, 300);
+                myFighter.isDodging = true;
+                setTimeout(() => myFighter.isDodging = false, 300);
                 break;
         }
     }
