@@ -1,52 +1,320 @@
-// SHAPE ARENA - Shape Definitions with Balance System
+// SHAPE ARENA - Complete Shape Roster with Balance System
 
 export const SHAPES = {
+    // ============================================
+    // 2D SHAPES (BASE FORMS)
+    // ============================================
     CIRCLE: {
         name: "Circle",
-        type: "Rolling Loop",
-        counters: ["Triangle", "Square"],
+        type: "Momentum Fighter",
+        category: "2D",
+        power: "Rolling Momentum Control",
+        ability: "Rolling Charge",
+        ranged: "Shockwave Push",
+        counters: ["Triangle", "PARALLELOGRAM"],
         weaknesses: ["Star", "Heart"],
         neutral: ["Spiral"],
-        description: "Wall bounce farming combos"
+        description: "Build speed, ram damage on contact. Consistent pressure, hard to stop but predictable movement."
+    },
+    OVAL: {
+        name: "Oval",
+        type: "Speed Skater",
+        category: "2D",
+        power: "Acceleration Control",
+        ability: "Fast Dash Chains",
+        ranged: "Wind Push",
+        counters: ["Square", "HEXAGON"],
+        weaknesses: ["Triangle", "Rectangle"],
+        neutral: ["Circle"],
+        description: "Fast repositioning with low impact force."
+    },
+    ELLIPSE: {
+        name: "Ellipse",
+        type: "Curve Fighter",
+        category: "2D",
+        power: "Curved Trajectory Control",
+        ability: "Orbit Dash",
+        ranged: "Gravity Drift",
+        counters: ["Triangle", "RECTANGLE"],
+        weaknesses: ["Square", "Star"],
+        neutral: ["Oval"],
+        description: "Unpredictable curved paths but weak direct hits."
     },
     TRIANGLE: {
         name: "Triangle",
-        type: "Edge Cut",
-        counters: ["Square", "Spiral"],
+        type: "Assassin",
+        category: "2D",
+        power: "Precision Impact Damage",
+        ability: "Piercing Dash",
+        ranged: "Spike Throw",
+        counters: ["Square", "Oval"],
         weaknesses: ["Circle", "Star"],
         neutral: ["Heart"],
-        description: "Dash + angle + wall + re-hit chains"
+        description: "High burst damage on clean hits but fragile."
     },
     SQUARE: {
         name: "Square",
-        type: "Ground Lock",
-        counters: ["Star", "Heart"],
+        type: "Tank Brawler",
+        category: "2D",
+        power: "Stability & Knockback Resistance",
+        ability: "Heavy Slam",
+        ranged: "Shockwave Push",
+        counters: ["Spiral", "Oval"],
         weaknesses: ["Triangle", "Circle"],
-        neutral: ["Spiral"],
-        description: "Trap between wall and body"
+        neutral: ["Pentagon"],
+        description: "Durability and control but slow movement."
+    },
+    RECTANGLE: {
+        name: "Rectangle",
+        type: "Linear Striker",
+        category: "2D",
+        power: "Straight-Line Force",
+        ability: "Charge Rush",
+        ranged: "Linear Beam Push",
+        counters: ["Spiral", "PARALLELOGRAM"],
+        weaknesses: ["Ellipse", "Kite"],
+        neutral: ["Square"],
+        description: "Long reach attacks but easy angle punishment."
+    },
+    PARALLELOGRAM: {
+        name: "Parallelogram",
+        type: "Evasive Fighter",
+        category: "2D",
+        power: "Angle Evasion",
+        ability: "Slip Dodge Counter",
+        ranged: "Redirect Force",
+        counters: ["Triangle", "HEXAGON"],
+        weaknesses: ["Circle", "Rectangle"],
+        neutral: ["Rhombus"],
+        description: "Evasive control with low raw damage."
+    },
+    RHOMBUS: {
+        name: "Rhombus",
+        type: "Counter Specialist",
+        category: "2D",
+        power: "Reflection Timing",
+        ability: "Reflect Strike",
+        ranged: "Shard Burst",
+        counters: ["Square", "Star"],
+        weaknesses: ["Heart", "Triangle"],
+        neutral: ["Parallelogram"],
+        description: "Punishes aggression but fragile."
+    },
+    TRAPEZOID: {
+        name: "Trapezoid",
+        type: "Unstable Fighter",
+        category: "2D",
+        power: "Unpredictable Movement",
+        ability: "Random Angle Bounce",
+        ranged: "Trap Field",
+        counters: ["Circle", "DIAMOND"],
+        weaknesses: ["Square", "Pentagon"],
+        neutral: ["Oval"],
+        description: "Unpredictable paths but inconsistent control."
+    },
+    KITE: {
+        name: "Kite",
+        type: "Air Mobility Fighter",
+        category: "2D",
+        power: "Air Control",
+        ability: "Glide Dash",
+        ranged: "Wind Gust Push",
+        counters: ["Square", "RECTANGLE"],
+        weaknesses: ["Hexagon", "Triangle"],
+        neutral: ["Ellipse"],
+        description: "Aerial dominance but ground weakness."
+    },
+    PENTAGON: {
+        name: "Pentagon",
+        type: "Balanced Fighter",
+        category: "2D",
+        power: "Adaptive Balance",
+        ability: "Mixed Combo Strike",
+        ranged: "Short Burst Push",
+        counters: [],
+        weaknesses: [],
+        neutral: ["Square", "Triangle", "Circle", "Star", "Heart", "Spiral"],
+        description: "Versatility with no specialization. All matchups are neutral-heavy."
+    },
+    HEXAGON: {
+        name: "Hexagon",
+        type: "Defense Controller",
+        category: "2D",
+        power: "Multi-Angle Defense",
+        ability: "Shield Pulse",
+        ranged: "Barrier Field",
+        counters: ["Spiral", "Triangle"],
+        weaknesses: ["Oval", "Parallelogram"],
+        neutral: ["Square"],
+        description: "Defense stability with low speed."
+    },
+    STAR: {
+        name: "Star",
+        type: "Burst Aggressor",
+        category: "2D",
+        power: "Spike Impact Damage",
+        ability: "Star Impact",
+        ranged: "Flash Burst",
+        counters: ["Rhombus", "Square"],
+        weaknesses: ["Square", "Spiral"],
+        neutral: ["Circle"],
+        description: "Explosive contact hits but fragile."
+    },
+    HEART: {
+        name: "Heart",
+        type: "Sustain Fighter",
+        category: "2D",
+        power: "Recovery & Survival",
+        ability: "Heal Pulse",
+        ranged: "Emotional Wave",
+        counters: ["Triangle", "RHOMBUS"],
+        weaknesses: ["Star", "Square"],
+        neutral: ["Triangle"],
+        description: "Survivability with self-regeneration but low damage."
+    },
+    CRESCENT: {
+        name: "Crescent",
+        type: "Trick Fighter",
+        category: "2D",
+        power: "Curved Attack Flow",
+        ability: "Moon Slash",
+        ranged: "Arc Push Wave",
+        counters: ["Square", "HEXAGON"],
+        weaknesses: ["Triangle", "Diamond"],
+        neutral: ["Ellipse"],
+        description: "Tricky angles but weak defense."
+    },
+    DIAMOND: {
+        name: "Diamond",
+        type: "Precision Fighter",
+        category: "2D",
+        power: "Critical Angle Hits",
+        ability: "Prism Strike",
+        ranged: "Light Beam Line",
+        counters: ["Spiral", "Oval"],
+        weaknesses: ["Trapezoid", "Crescent"],
+        neutral: ["Rhombus"],
+        description: "Highest accuracy but requires skill timing."
     },
     SPIRAL: {
         name: "Spiral",
         type: "Vortex Chain",
+        category: "2D",
+        power: "Movement Loop Control",
+        ability: "Vortex Dash",
+        ranged: "Gravity Pull",
         counters: ["Circle", "Star"],
         weaknesses: ["Triangle", "Heart"],
         neutral: ["Square"],
-        description: "Movement loop control combos"
+        description: "Movement loop control combos."
     },
-    STAR: {
-        name: "Star",
-        type: "Burst Link",
-        counters: ["Heart", "Triangle"],
-        weaknesses: ["Square", "Spiral"],
-        neutral: ["Circle"],
-        description: "Fast multi-hit spike combos"
+
+    // ============================================
+    // 3D SHAPES (EVOLVED FORMS)
+    // Same identity, better control + stability
+    // ============================================
+    SPHERE: {
+        name: "Sphere",
+        type: "Evolved Circle",
+        category: "3D",
+        baseForm: "CIRCLE",
+        power: "Enhanced Momentum",
+        ability: "Perfect Rolling",
+        ranged: "Enhanced Shockwave",
+        counters: ["Cone", "Cube"],
+        weaknesses: ["Icosahedron", "Capsule"],
+        neutral: ["Torus"],
+        description: "Circle upgrade: smoother rolling + better momentum chaining."
     },
-    HEART: {
-        name: "Heart",
-        type: "Survival Chain",
-        counters: ["Spiral", "Circle"],
-        weaknesses: ["Star", "Square"],
-        neutral: ["Triangle"],
-        description: "Defensive counter-based combos"
+    CUBE: {
+        name: "Cube",
+        type: "Evolved Square",
+        category: "3D",
+        baseForm: "SQUARE",
+        power: "Enhanced Stability",
+        ability: "Fortress Slam",
+        ranged: "Enhanced Shockwave",
+        counters: ["Icosahedron", "Sphere"],
+        weaknesses: ["Cone", "Torus"],
+        neutral: ["Dodecahedron"],
+        description: "Square upgrade: stronger wall resistance + impact stability."
+    },
+    CONE: {
+        name: "Cone",
+        type: "Evolved Triangle",
+        category: "3D",
+        baseForm: "TRIANGLE",
+        power: "Enhanced Precision",
+        ability: "Drill Pierce",
+        ranged: "Enhanced Spike",
+        counters: ["Cube", "Sphere"],
+        weaknesses: ["Icosahedron", "Capsule"],
+        neutral: ["Cylinder"],
+        description: "Triangle upgrade: sharper directional burst control."
+    },
+    CYLINDER: {
+        name: "Cylinder",
+        type: "Evolved Rectangle",
+        category: "3D",
+        baseForm: "RECTANGLE",
+        power: "Enhanced Linear Force",
+        ability: "Sustained Rush",
+        ranged: "Enhanced Beam",
+        counters: ["Torus", "Parallelogram"],
+        weaknesses: ["Cone", "Kite"],
+        neutral: ["Cube"],
+        description: "Rectangle upgrade: sustained linear pressure movement."
+    },
+    TORUS: {
+        name: "Torus",
+        type: "Evolved Spiral",
+        category: "3D",
+        baseForm: "SPIRAL",
+        power: "Enhanced Loop Control",
+        ability: "Orbit Loop",
+        ranged: "Enhanced Gravity",
+        counters: ["Sphere", "Icosahedron"],
+        weaknesses: ["Cone", "Capsule"],
+        neutral: ["Cube"],
+        description: "Spiral upgrade: looping movement control advantage."
+    },
+    CAPSULE: {
+        name: "Capsule",
+        type: "Evolved Heart",
+        category: "3D",
+        baseForm: "HEART",
+        power: "Enhanced Recovery",
+        ability: "Rapid Regen",
+        ranged: "Enhanced Wave",
+        counters: ["Cone", "Rhombus"],
+        weaknesses: ["Icosahedron", "Cube"],
+        neutral: ["Sphere"],
+        description: "Heart upgrade: faster survival + regen efficiency."
+    },
+    ICOSAHEDRON: {
+        name: "Icosahedron",
+        type: "Evolved Diamond",
+        category: "3D",
+        baseForm: "DIAMOND",
+        power: "Ultimate Precision",
+        ability: "Perfect Prism",
+        ranged: "Enhanced Light Beam",
+        counters: ["Torus", "Sphere"],
+        weaknesses: ["Cone", "Crescent"],
+        neutral: ["Rhombus"],
+        description: "Diamond upgrade: highest precision control form."
+    },
+    DODECAHEDRON: {
+        name: "Dodecahedron",
+        type: "Evolved Hexagon",
+        category: "3D",
+        baseForm: "HEXAGON",
+        power: "Ultimate Defense",
+        ability: "Dome Shield",
+        ranged: "Enhanced Barrier",
+        counters: ["Torus", "Cone"],
+        weaknesses: ["Sphere", "Parallelogram"],
+        neutral: ["Cube"],
+        description: "Hexagon upgrade: strongest defensive structure stability."
     }
 };
