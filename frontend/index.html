@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SHAPE ARENA - Physics-Based Fighting Game</title>
     <link rel="stylesheet" href="style.css">
+    <script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
     <div class="game-container">
@@ -41,18 +42,29 @@
 
         <canvas id="gameCanvas" style="display: none;"></canvas>
         
-        <div class="controls-info">
+        <!-- Mobile Controls (hidden on desktop) -->
+        <div id="mobileControls" class="mobile-controls" style="display: none;">
+            <div class="mobile-d-pad">
+                <button class="mobile-btn" id="btnUp">↑</button>
+                <button class="mobile-btn" id="btnDown">↓</button>
+                <button class="mobile-btn" id="btnLeft">←</button>
+                <button class="mobile-btn" id="btnRight">→</button>
+            </div>
+            <div class="mobile-actions">
+                <button class="mobile-btn action-btn" id="btnLight">Light</button>
+                <button class="mobile-btn action-btn" id="btnMedium">Med</button>
+                <button class="mobile-btn action-btn" id="btnHeavy">Heavy</button>
+                <button class="mobile-btn ult-btn" id="btnUlt">ULT</button>
+                <button class="mobile-btn dodge-btn" id="btnDodge">Dodge</button>
+            </div>
+        </div>
+        
+        <div class="controls-info" id="desktopControls">
             <div class="player-controls">
-                <h3>Player 1 (WASD)</h3>
+                <h3>Your Controls (WASD)</h3>
                 <p>W/S - Move Up/Down | A/D - Move Left/Right</p>
                 <p>Q - Light Ability | E - Medium Ability | R - Heavy Ability</p>
                 <p>F - Activate Ultimate | Space - Dodge</p>
-            </div>
-            <div class="player-controls">
-                <h3>Player 2 (Arrow Keys)</h3>
-                <p>Arrow Keys - Movement</p>
-                <p>/ - Light Ability | . - Medium Ability | ' - Heavy Ability</p>
-                <p>Enter - Activate Ultimate | Shift - Dodge</p>
             </div>
         </div>
         <div class="game-info">
