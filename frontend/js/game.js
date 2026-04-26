@@ -3,6 +3,7 @@
 import { PhysicsEngine } from './physics.js';
 import { Fighter } from './fighter.js';
 import { CONFIG } from './config.js';
+import { NetworkClient } from './network.js';
 
 export class Game {
     constructor(canvasId) {
@@ -10,6 +11,7 @@ export class Game {
         this.ctx = this.canvas.getContext("2d");
         
         this.physicsEngine = new PhysicsEngine();
+        this.network = new NetworkClient();
         
         // Arena bounds
         this.bounds = {
@@ -21,11 +23,73 @@ export class Game {
         
         // Game state
         this.fighters = [];
-        this.gameState = "ready"; // ready, fighting, ended
+        this.gameState = "lobby"; // lobby, ready, fighting, ended
         this.winner = null;
+        this.isOnline = false;
+        this.playerIndex = 0; // 0 = player1, 1 = player2
         
         // Initialize
         this.setupCanvas();
+        this.setupNetwork();
+    }
+
+    setupNetwork() {
+        this.network.connect();
+        
+        this.network.on('onWaiting', (data) => {
+            this.gameState = 'waiting';
+            this.render();
+        });
+
+        this.network.on('onGameStart', (data) => {
+            this.isOnline = true;
+            this.playerIndex = data.player1.id === this.network.playerId ? 0 : 1;
+            
+            // Create fighters from server data
+            this.fighters = [
+                new Fighter(data.player1.shape, data.player1.position.x, data.player1.position.y),
+                new Fighter(data.player2.shape, data.player2.position.x, data.player2.position.y)
+            ];
+            
+            // Set initial HP from server
+            this.fighters[0].hp = data.player1.hp;
+            this.fighters[1].hp = data.player2.hp;
+            
+            this.gameState = 'fighting';
+            this.gameLoop();
+        });
+
+        this.network.on('onOpponentMove', (data) => {
+            const opponentIndex = this.playerIndex === 0 ? 1 : 0;
+            this.fighters[opponentIndex].position = data.position;
+            this.fighters[opponentIndex].velocity = data.velocity;
+        });
+
+        this.network.on('onPlayerHit', (data) => {
+            // Update HP from server
+            this.fighters[0].hp = data.player1Hp;
+            this.fighters[1].hp = data.player2Hp;
+            
+            // Check for game over
+            if (data.player1Hp <= 0 || data.player2Hp <= 0) {
+                this.endGame(this.fighters[data.player1Hp > 0 ? 0 : 1]);
+            }
+        });
+
+        this.network.on('onGameOver', (data) => {
+            this.gameState = 'ended';
+            this.winner = this.fighters.find(f => f.shapeData.name === data.winnerName);
+            this.render();
+        });
+
+        this.network.on('onPlayerDisconnected', (data) => {
+            this.gameState = 'ended';
+            this.render();
+        });
+    }
+
+    joinOnlineGame(playerName, shapeType) {
+        this.network.joinLobby(playerName, shapeType);
     }
 
     setupCanvas() {
@@ -78,6 +142,16 @@ export class Game {
         
         const isDead = defender.takeDamage(damage, knockback);
         
+        // Send hit to network if online
+        if (this.isOnline) {
+            this.network.sendHit(
+                attacker.shapeData.name,
+                defender.shapeData.name,
+                damage,
+                hitType
+            );
+        }
+        
         // Update attacker's combo
         if (attacker.comboCount === 0) {
             attacker.startCombo();
@@ -107,8 +181,21 @@ export class Game {
         for (const fighter of this.fighters) {
             fighter.updatePhysics(this.bounds, this.physicsEngine);
             
+            // Send movement to network if online and this is our player
+            if (this.isOnline && this.fighters.indexOf(fighter) === this.playerIndex) {
+                this.network.sendMove(fighter.position, fighter.velocity);
+            }
+            
             // Check for out of bounds
             if (fighter.isOutOfBounds(this.bounds)) {
+                if (this.isOnline) {
+                    this.network.sendHit(
+                        this.fighters[this.playerIndex === 0 ? 1 : 0].shapeData.name,
+                        fighter.shapeData.name,
+                        100,
+                        "OUT_OF_BOUNDS"
+                    );
+                }
                 this.endGame(this.fighters.find(f => f !== fighter));
                 return;
             }
@@ -120,27 +207,29 @@ export class Game {
             }
         }
         
-        // Check fighter collisions
-        if (this.fighters.length >= 2) {
-            const [f1, f2] = this.fighters;
-            if (this.checkCollision(f1, f2)) {
-                // Determine hit type based on context
-                let hitType = "CLEAN_HIT";
-                
-                // Check wall proximity
-                const nearWall = 
-                    f2.position.x <= this.bounds.left + 20 ||
-                    f2.position.x >= this.bounds.right - 20 ||
-                    f2.position.y <= this.bounds.top + 20 ||
-                    f2.position.y >= this.bounds.bottom - 20;
-                
-                if (nearWall) hitType = "WALL_HIT";
-                
-                // Process hit
-                const isDead = this.processHit(f1, f2, hitType);
-                if (isDead) {
-                    this.endGame(f1);
-                    return;
+        // Check fighter collisions (only process if we're player1 or offline)
+        if (!this.isOnline || this.playerIndex === 0) {
+            if (this.fighters.length >= 2) {
+                const [f1, f2] = this.fighters;
+                if (this.checkCollision(f1, f2)) {
+                    // Determine hit type based on context
+                    let hitType = "CLEAN_HIT";
+                    
+                    // Check wall proximity
+                    const nearWall = 
+                        f2.position.x <= this.bounds.left + 20 ||
+                        f2.position.x >= this.bounds.right - 20 ||
+                        f2.position.y <= this.bounds.top + 20 ||
+                        f2.position.y >= this.bounds.bottom - 20;
+                    
+                    if (nearWall) hitType = "WALL_HIT";
+                    
+                    // Process hit
+                    const isDead = this.processHit(f1, f2, hitType);
+                    if (isDead) {
+                        this.endGame(f1);
+                        return;
+                    }
                 }
             }
         }
@@ -419,7 +508,19 @@ export class Game {
         });
         
         // Game state text
-        if (this.gameState === "ready") {
+        if (this.gameState === "lobby") {
+            ctx.fillStyle = "#ffffff";
+            ctx.font = "bold 48px Arial";
+            ctx.textAlign = "center";
+            ctx.fillText("SHAPE ARENA", this.canvas.width / 2, this.canvas.height / 2 - 50);
+            ctx.font = "24px Arial";
+            ctx.fillText("Select your shape to play online", this.canvas.width / 2, this.canvas.height / 2 + 20);
+        } else if (this.gameState === "waiting") {
+            ctx.fillStyle = "#ffd700";
+            ctx.font = "bold 48px Arial";
+            ctx.textAlign = "center";
+            ctx.fillText("WAITING FOR OPPONENT...", this.canvas.width / 2, this.canvas.height / 2);
+        } else if (this.gameState === "ready") {
             ctx.fillStyle = "#ffffff";
             ctx.font = "bold 48px Arial";
             ctx.textAlign = "center";
