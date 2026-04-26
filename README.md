@@ -90,36 +90,112 @@ npm start
 3. Connect your GitHub repository
 4. Set the following:
    - **Build Command**: `npm install`
-   - **Start Command**: `node backend/server.js`
+   - **Start Command**: `node server.js`
 5. Deploy!
 
 The server will automatically start and serve the frontend at your Render URL.
 
 ## Shapes
 
-- **Circle (Rolling Loop)**: Wall bounce farming combos
-  - Counters: Triangle, Square
+### 2D Shapes (Base Forms - 16 total)
+
+- **Circle (Momentum Fighter)**: Rolling Momentum Control
+  - Ability: Rolling Charge (build speed, ram damage)
+  - Counters: Triangle, Parallelogram
   - Weaknesses: Star, Heart
 
-- **Triangle (Edge Cut)**: Dash + angle + wall + re-hit chains
-  - Counters: Square, Spiral
+- **Oval (Speed Skater)**: Acceleration Control
+  - Ability: Fast Dash Chains
+  - Counters: Square, Hexagon
+  - Weaknesses: Triangle, Rectangle
+
+- **Ellipse (Curve Fighter)**: Curved Trajectory Control
+  - Ability: Orbit Dash
+  - Counters: Triangle, Rectangle
+  - Weaknesses: Square, Star
+
+- **Triangle (Assassin)**: Precision Impact Damage
+  - Ability: Piercing Dash (high burst damage)
+  - Counters: Square, Oval
   - Weaknesses: Circle, Star
 
-- **Square (Ground Lock)**: Trap between wall and body
-  - Counters: Star, Heart
+- **Square (Tank Brawler)**: Stability & Knockback Resistance
+  - Ability: Heavy Slam
+  - Counters: Spiral, Oval
   - Weaknesses: Triangle, Circle
 
-- **Spiral (Vortex Chain)**: Movement loop control combos
+- **Rectangle (Linear Striker)**: Straight-Line Force
+  - Ability: Charge Rush
+  - Counters: Spiral, Parallelogram
+  - Weaknesses: Ellipse, Kite
+
+- **Parallelogram (Evasive Fighter)**: Angle Evasion
+  - Ability: Slip Dodge Counter
+  - Counters: Triangle, Hexagon
+  - Weaknesses: Circle, Rectangle
+
+- **Rhombus (Counter Specialist)**: Reflection Timing
+  - Ability: Reflect Strike
+  - Counters: Square, Star
+  - Weaknesses: Heart, Triangle
+
+- **Trapezoid (Unstable Fighter)**: Unpredictable Movement
+  - Ability: Random Angle Bounce
+  - Counters: Circle, Diamond
+  - Weaknesses: Square, Pentagon
+
+- **Kite (Air Mobility Fighter)**: Air Control
+  - Ability: Glide Dash
+  - Counters: Square, Rectangle
+  - Weaknesses: Hexagon, Triangle
+
+- **Pentagon (Balanced Fighter)**: Adaptive Balance
+  - Ability: Mixed Combo Strike
+  - Counters: None (all neutral matchups)
+  - Weaknesses: None
+
+- **Hexagon (Defense Controller)**: Multi-Angle Defense
+  - Ability: Shield Pulse
+  - Counters: Spiral, Triangle
+  - Weaknesses: Oval, Parallelogram
+
+- **Star (Burst Aggressor)**: Spike Impact Damage
+  - Ability: Star Impact
+  - Counters: Rhombus, Square
+  - Weaknesses: Square, Spiral
+
+- **Heart (Sustain Fighter)**: Recovery & Survival
+  - Ability: Heal Pulse (self-regeneration)
+  - Counters: Triangle, Rhombus
+  - Weaknesses: Star, Square
+
+- **Crescent (Trick Fighter)**: Curved Attack Flow
+  - Ability: Moon Slash
+  - Counters: Square, Hexagon
+  - Weaknesses: Triangle, Diamond
+
+- **Diamond (Precision Fighter)**: Critical Angle Hits
+  - Ability: Prism Strike
+  - Counters: Spiral, Oval
+  - Weaknesses: Trapezoid, Crescent
+
+- **Spiral (Vortex Chain)**: Movement Loop Control
+  - Ability: Vortex Dash
   - Counters: Circle, Star
   - Weaknesses: Triangle, Heart
 
-- **Star (Burst Link)**: Fast multi-hit spike combos
-  - Counters: Heart, Triangle
-  - Weaknesses: Square, Spiral
+### 3D Shapes (Evolved Forms - 8 total)
 
-- **Heart (Survival Chain)**: Defensive counter-based combos
-  - Counters: Spiral, Circle
-  - Weaknesses: Star, Square
+Same identity as 2D forms with enhanced control + stability.
+
+- **Sphere (Evolved Circle)**: Enhanced Momentum
+- **Cube (Evolved Square)**: Enhanced Stability
+- **Cone (Evolved Triangle)**: Enhanced Precision
+- **Cylinder (Evolved Rectangle)**: Enhanced Linear Force
+- **Torus (Evolved Spiral)**: Enhanced Loop Control
+- **Capsule (Evolved Heart)**: Enhanced Recovery
+- **Icosahedron (Evolved Diamond)**: Ultimate Precision
+- **Dodecahedron (Evolved Hexagon)**: Ultimate Defense
 
 ## License
 
