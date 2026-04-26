@@ -178,11 +178,30 @@ export class Game {
         // Set color based on shape
         const colors = {
             CIRCLE: "#ff6b6b",
+            OVAL: "#ffa502",
+            ELLIPSE: "#ff7f50",
             TRIANGLE: "#4ecdc4",
             SQUARE: "#45b7d1",
-            SPIRAL: "#96ceb4",
+            RECTANGLE: "#5f9ea0",
+            PARALLELOGRAM: "#9b59b6",
+            RHOMBUS: "#e056fd",
+            TRAPEZOID: "#f0932b",
+            KITE: "#6ab04c",
+            PENTAGON: "#be2edd",
+            HEXAGON: "#22a6b3",
             STAR: "#ffeaa7",
-            HEART: "#fd79a8"
+            HEART: "#fd79a8",
+            CRESCENT: "#a29bfe",
+            DIAMOND: "#00d2d3",
+            SPIRAL: "#96ceb4",
+            SPHERE: "#ff6b6b",
+            CUBE: "#45b7d1",
+            CONE: "#4ecdc4",
+            CYLINDER: "#5f9ea0",
+            TORUS: "#96ceb4",
+            CAPSULE: "#fd79a8",
+            ICOSAHEDRON: "#00d2d3",
+            DODECAHEDRON: "#22a6b3"
         };
         
         ctx.fillStyle = colors[fighter.shapeType] || "#ffffff";
@@ -192,18 +211,67 @@ export class Game {
         
         switch (fighter.shapeType) {
             case "CIRCLE":
+            case "SPHERE":
                 ctx.arc(x, y, 20, 0, Math.PI * 2);
                 break;
+            case "OVAL":
+                ctx.ellipse(x, y, 25, 15, 0, 0, Math.PI * 2);
+                break;
+            case "ELLIPSE":
+                ctx.ellipse(x, y, 28, 12, Math.PI / 4, 0, Math.PI * 2);
+                break;
             case "TRIANGLE":
+            case "CONE":
                 ctx.moveTo(x, y - 20);
                 ctx.lineTo(x + 20, y + 15);
                 ctx.lineTo(x - 20, y + 15);
                 ctx.closePath();
                 break;
             case "SQUARE":
+            case "CUBE":
                 ctx.rect(x - 18, y - 18, 36, 36);
                 break;
+            case "RECTANGLE":
+            case "CYLINDER":
+                ctx.rect(x - 25, y - 12, 50, 24);
+                break;
+            case "PARALLELOGRAM":
+                ctx.moveTo(x - 15, y - 15);
+                ctx.lineTo(x + 5, y - 15);
+                ctx.lineTo(x + 15, y + 15);
+                ctx.lineTo(x - 5, y + 15);
+                ctx.closePath();
+                break;
+            case "RHOMBUS":
+                ctx.moveTo(x, y - 20);
+                ctx.lineTo(x + 18, y);
+                ctx.lineTo(x, y + 20);
+                ctx.lineTo(x - 18, y);
+                ctx.closePath();
+                break;
+            case "TRAPEZOID":
+                ctx.moveTo(x - 20, y - 15);
+                ctx.lineTo(x + 20, y - 15);
+                ctx.lineTo(x + 12, y + 15);
+                ctx.lineTo(x - 12, y + 15);
+                ctx.closePath();
+                break;
+            case "KITE":
+                ctx.moveTo(x, y - 22);
+                ctx.lineTo(x + 18, y);
+                ctx.lineTo(x, y + 12);
+                ctx.lineTo(x - 18, y);
+                ctx.closePath();
+                break;
+            case "PENTAGON":
+                this.drawPolygon(ctx, x, y, 5, 20);
+                break;
+            case "HEXAGON":
+            case "DODECAHEDRON":
+                this.drawPolygon(ctx, x, y, 6, 20);
+                break;
             case "SPIRAL":
+            case "TORUS":
                 for (let i = 0; i < 3; i++) {
                     ctx.arc(x, y, 8 + i * 6, 0, Math.PI * 2);
                 }
@@ -212,7 +280,15 @@ export class Game {
                 this.drawStar(ctx, x, y, 5, 20, 10);
                 break;
             case "HEART":
+            case "CAPSULE":
                 this.drawHeart(ctx, x, y, 20);
+                break;
+            case "CRESCENT":
+                this.drawCrescent(ctx, x, y, 20);
+                break;
+            case "DIAMOND":
+            case "ICOSAHEDRON":
+                this.drawDiamond(ctx, x, y, 20);
                 break;
         }
         
@@ -273,6 +349,31 @@ export class Game {
         ctx.bezierCurveTo(x - size / 2, y + size / 2, x, y + size * 0.75, x, y + size);
         ctx.bezierCurveTo(x, y + size * 0.75, x + size / 2, y + size / 2, x + size / 2, y + size / 4);
         ctx.bezierCurveTo(x + size / 2, y, x, y, x, y + size / 4);
+    }
+
+    drawPolygon(ctx, x, y, sides, radius) {
+        const angle = (Math.PI * 2) / sides;
+        ctx.moveTo(x + radius * Math.cos(-Math.PI / 2), y + radius * Math.sin(-Math.PI / 2));
+        for (let i = 1; i <= sides; i++) {
+            ctx.lineTo(
+                x + radius * Math.cos(angle * i - Math.PI / 2),
+                y + radius * Math.sin(angle * i - Math.PI / 2)
+            );
+        }
+        ctx.closePath();
+    }
+
+    drawCrescent(ctx, x, y, size) {
+        ctx.arc(x, y, size, 0, Math.PI * 2);
+        ctx.arc(x + 8, y - 5, size * 0.8, 0, Math.PI * 2, true);
+    }
+
+    drawDiamond(ctx, x, y, size) {
+        ctx.moveTo(x, y - size);
+        ctx.lineTo(x + size * 0.6, y);
+        ctx.lineTo(x, y + size);
+        ctx.lineTo(x - size * 0.6, y);
+        ctx.closePath();
     }
 
     drawUI() {
