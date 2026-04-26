@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHAPE ARENA - Physics-Based Fighting Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <h1>SHAPE ARENA</h1>
+        <canvas id="gameCanvas"></canvas>
+        <div class="controls-info">
+            <div class="player-controls">
+                <h3>Player 1 (WASD)</h3>
+                <p>W/S - Move Up/Down | A/D - Move Left/Right</p>
+                <p>Q - Light Ability | E - Medium Ability | R - Heavy Ability</p>
+                <p>F - Activate Ultimate | Space - Dodge</p>
+            </div>
+            <div class="player-controls">
+                <h3>Player 2 (Arrow Keys)</h3>
+                <p>Arrow Keys - Movement</p>
+                <p>/ - Light Ability | . - Medium Ability | ' - Heavy Ability</p>
+                <p>Enter - Activate Ultimate | Shift - Dodge</p>
+            </div>
+        </div>
+        <div class="game-info">
+            <p>Reduce opponent HP to 0 or knock them out of bounds to win!</p>
+            <p>Build combos to increase damage and charge your ultimate.</p>
+        </div>
+    </div>
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
