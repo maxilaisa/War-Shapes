@@ -299,7 +299,9 @@ export class Game {
         // Draw based on shape type
         ctx.beginPath();
         
-        switch (fighter.shapeType) {
+        const shapeType = fighter.shapeType || "CIRCLE";
+        
+        switch (shapeType) {
             case "CIRCLE":
             case "SPHERE":
                 ctx.arc(x, y, 20, 0, Math.PI * 2);
@@ -342,15 +344,15 @@ export class Game {
             case "TRAPEZOID":
                 ctx.moveTo(x - 20, y - 15);
                 ctx.lineTo(x + 20, y - 15);
-                ctx.lineTo(x + 12, y + 15);
-                ctx.lineTo(x - 12, y + 15);
+                ctx.lineTo(x + 25, y + 15);
+                ctx.lineTo(x - 25, y + 15);
                 ctx.closePath();
                 break;
             case "KITE":
-                ctx.moveTo(x, y - 22);
-                ctx.lineTo(x + 18, y);
-                ctx.lineTo(x, y + 12);
-                ctx.lineTo(x - 18, y);
+                ctx.moveTo(x, y - 25);
+                ctx.lineTo(x + 15, y);
+                ctx.lineTo(x, y + 20);
+                ctx.lineTo(x - 15, y);
                 ctx.closePath();
                 break;
             case "PENTAGON":
@@ -359,12 +361,6 @@ export class Game {
             case "HEXAGON":
             case "DODECAHEDRON":
                 this.drawPolygon(ctx, x, y, 6, 20);
-                break;
-            case "SPIRAL":
-            case "TORUS":
-                for (let i = 0; i < 3; i++) {
-                    ctx.arc(x, y, 8 + i * 6, 0, Math.PI * 2);
-                }
                 break;
             case "STAR":
                 this.drawStar(ctx, x, y, 5, 20, 10);
@@ -379,6 +375,13 @@ export class Game {
             case "DIAMOND":
             case "ICOSAHEDRON":
                 this.drawDiamond(ctx, x, y, 20);
+                break;
+            case "SPIRAL":
+            case "TORUS":
+                this.drawStar(ctx, x, y, 8, 20, 8);
+                break;
+            default:
+                ctx.arc(x, y, 20, 0, Math.PI * 2);
                 break;
         }
         
