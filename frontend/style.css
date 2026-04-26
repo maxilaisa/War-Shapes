@@ -84,3 +84,69 @@ h1 {
     font-size: 0.95rem;
     color: #ffd700;
 }
+
+.lobby {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 30px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 20px;
+}
+
+.lobby h2 {
+    color: #ffd700;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+.lobby-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+}
+
+.lobby-form input,
+.lobby-form select {
+    padding: 12px 20px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    font-size: 1rem;
+    width: 100%;
+    max-width: 300px;
+}
+
+.lobby-form input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.lobby-form select option {
+    background: #1a1a2e;
+    color: #ffffff;
+}
+
+.lobby-form button {
+    padding: 12px 30px;
+    background: linear-gradient(135deg, #ffd700, #ff6b6b);
+    border: none;
+    border-radius: 5px;
+    color: #1a1a2e;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.lobby-form button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+}
+
+.lobby-status {
+    margin-top: 15px;
+    color: #ffd700;
+    font-size: 1rem;
+    text-align: center;
+}
