@@ -56,6 +56,7 @@ export class Game {
             this.fighters[1].hp = data.player2.hp;
             
             this.gameState = 'fighting';
+            this.render(); // Initial render
             this.gameLoop();
         });
 
