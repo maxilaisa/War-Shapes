@@ -53,6 +53,25 @@ npm start
 
 3. Open your browser and navigate to `http://localhost:3000`
 
+## Online Multiplayer
+
+The game now supports real-time online multiplayer using Socket.io:
+
+- **Lobby System**: Enter your name and select your shape to find a match
+- **Matchmaking**: Automatically pairs waiting players
+- **Real-time Sync**: Movement and combat state synchronized across clients
+- **Room-based**: Each game is isolated in its own room
+
+**To Play Online:**
+1. Open the game in your browser
+2. Enter your name in the lobby
+3. Select your shape from the dropdown
+4. Click "Find Match"
+5. Wait for an opponent to join
+6. Battle in real-time!
+
+**Note**: On Render's free tier, the server may spin down after 15 minutes of inactivity. Use an uptime service to keep it alive for multiplayer.
+
 ## Controls
 
 ### Player 1 (WASD)
